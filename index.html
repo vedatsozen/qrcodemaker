@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>QR Code Redirect</title>
+    <script src="https://cdn.rawgit.com/davidshimjs/qrcodejs/gh-pages/qrcode.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.9.4/html2pdf.bundle.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.4.0/jspdf.umd.min.js"></script>
+
+
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <button class="create" onclick="window.print()">QR KODLARI YAZDIR</button>
+    <h1>MENU QR CODE MAKER</h1>
+    <label>
+        <p>Kaç Adet QR Code oluşturmak istiyorsunuz?</p>
+    </label>
+    <input type="number" id="amount" required>
+    <label>
+        <p>Qr Codunuzu Bağlamak İstediğiniz URL'yi yazınız.</p>
+    </label>
+    <input type="text" id="siteurl" required>
+    <button class="create" onclick="createqrcodes()">QR KODU OLUŞTUR</button>
+    <div id="container"></div>
+</body>
+<script>
+
+function createqrcodes() {
+
+    document.getElementById("container").innerHTML = "";
+
+    document.getElementById("container").style.display = "block";
+
+    let qrCodeAmount = document.getElementById("amount").value;
+    let siteUrl = document.getElementById("siteurl").value;
+
+    if (qrCodeAmount === "" || siteUrl === "") {
+        alert("Lütfen Boş Alan Bırakmayınız.");
+    } else {
+        for (let i = 0; i < qrCodeAmount; i++) {
+            let newCode = document.createElement("div");
+            newCode.className = "qrcode";
+            newCode.id = "qrCode" + i; // Farklı ID'ler kullanarak her QR kodunu ayırın
+
+            // QR kodunu oluştur
+            new QRCode(newCode, {
+                text: siteUrl,
+                width: 128,
+                height: 128
+            });
+
+            document.getElementById("container").appendChild(newCode);
+        }
+    }
+}
+
+
+
+
+</script>
+</html>
